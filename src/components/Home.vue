@@ -22,9 +22,13 @@
 </script>
 
 <style lang="scss" scoped>
+  @import '../scss/variable';
+
+
   button {
     font-size: 16px;
     font-weight: 600;
     padding: 10px 20px;
+    background-color: $color-blue;
   }
 </style>
