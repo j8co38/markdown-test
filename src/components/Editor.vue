@@ -1,28 +1,30 @@
 <template>
   <div class="editor">
     <h1>エディター画面</h1>
-    <span>{{ user.displayName }}</span>
+    <span><i class="fas fa-user-circle"></i>{{ user.displayName }}</span>
     <button class="logoutBtn" @click="logout"><i class="fas fa-sign-out-alt"></i>ログアウト</button>
     <div class="memoSection">
       <div class="memoListWrapper">
-        <button class="addMemoBtn" @click="addMemo">メモの追加</button>
-        <div
-          class="memoList"
-          v-for="(memo, index) in memos"
-          :key="`memo-${index}`"
-          @click="selectMemo(index)"
-          :data-selected="index == selectedIndex"
-        >
-          <p class="memoTitle">{{ displayTitle(memo.markdown) }}</p>
+        <button class="addMemoBtn" @click="addMemo"><i class="fas fa-pencil-alt"></i>メモの追加</button>
+        <div class="memoList">
+          <div
+            class="memoListItem"
+            v-for="(memo, index) in memos"
+            :key="`memo-${index}`"
+            @click="selectMemo(index)"
+            :data-selected="index == selectedIndex"
+          >
+            <p class="memoTitleWrap"><span class="memoTitle">{{ displayTitle(memo.markdown) }}</span><i class="fas fa-angle-right"></i></p>
+          </div>
         </div>
-        <button class="deleteMemoBtn" v-if="memos.length" @click="deleteMemo">選択中のメモの削除</button>
+        <button class="deleteMemoBtn" v-if="memos.length > 1" @click="deleteMemo"><i class="fas fa-trash-alt"></i>選択中のメモの削除</button>
       </div>
       <div class="textAreaWrapper">
         <div class="inputArea">
           <textarea class="markdown" v-model="memos[selectedIndex].markdown"></textarea>
           <div class="preview" v-html="preview()"></div>
         </div>
-        <button class="saveMemosBtn" @click="saveMemos">{{ (!isSaving) ? "メモの保存" : "保存中..." }}</button>
+        <button class="saveMemosBtn" @click="saveMemos"><i v-if="!isSaving" class="fas fa-save"></i>{{ (!isSaving) ? "メモの保存" : "保存中..." }}</button>
       </div>
     </div>
   </div>
@@ -102,16 +104,23 @@
 <style lang="scss" scoped>
   @import '../scss/variable';
 
+  button {
+    transition: all .2s;
+  }
+
+  .fas {
+    margin-right: 4px;
+  }
 
   .logoutBtn {
     font-size: 12px;
     margin-left: 8px;
     padding: 4px 10px;
     color: white;
-    background-color: rgba(0, 10, 10, 0.4);
+    background-color: rgba($color-black, 0.64);
 
-    .fas {
-      margin-right: 4px;
+    &:hover {
+      background-color: rgba($color-black, 0.72);
     }
   }
 
@@ -134,15 +143,20 @@
   }
 
   .memoList {
+    overflow-y: auto;
+    height: 580px;
+  }
+
+  .memoListItem {
     box-sizing: border-box;
     padding: 16px 10px;
     cursor: pointer;
     transition: all .2s;
     text-align: left;
-    border-bottom: 1px solid rgba(0, 10, 10, 0.4);
+    border-bottom: 1px solid rgba($color-black, 0.16);
 
     &:hover {
-      background-color: rgba(0, 10, 10, 0.1);
+      background-color: rgba($color-black, 0.04);
     }
 
     &[data-selected='true'] {
@@ -151,11 +165,23 @@
     }
   }
 
-  .memoTitle {
-    overflow: hidden;
+  .memoTitleWrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     height: 1.5em;
     margin: 0;
-    white-space: nowrap;
+
+    .memoTitle {
+      overflow: hidden;
+      margin: 0;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .fas {
+      margin: 0 0 0 8px;
+    }
   }
 
   .addMemoBtn {
@@ -164,10 +190,9 @@
     width: 100%;
     margin-bottom: 20px;
     padding: 10px 0;
-    transition: all .2s;
     color: white;
     background-color: $color-pink;
-    box-shadow: 0 8px 8px rgba(0, 10, 10, 0.2);
+    box-shadow: 0 4px 8px rgba($color-black, 0.1);
 
     &:hover {
       transform: translateY(2px);
@@ -199,28 +224,33 @@
     height: 600px;
     padding: 20px;
     color: #2d2d2d;
-    border-color: rgba(0, 10, 10, 0.2);
-    border-radius: 8px;
+    border: 1px solid rgba($color-black, 0.16);
+    background-color: rgba(245, 245, 242, 1);
   }
 
   .preview {
     flex: 1;
     width: 49%;
     min-width: 1;
-    margin-left: 2%;
+    height: 600px;
     padding: 20px 32px;
     text-align: left;
     word-wrap: break-word;
-    border-radius: 8px;
-    background-color: rgba(0, 10, 10, 0.4);
+    border: 1px solid rgba($color-black, 0.16);
+    border-left: none;
+    background-color: white;
   }
 
   .deleteMemoBtn {
     font-size: 14px;
     margin: 20px 0 0 auto;
     padding: 10px 16px;
-    color: white;
-    background-color: rgba(255, 255, 255, 0.08);
+    color: rgba($color-black, 0.64);
+    border: 1px solid rgba($color-black, 0.16);
+
+    &:hover {
+      background-color: rgba($color-black, 0.08);
+    }
   }
 
   .saveMemosBtn {
@@ -229,7 +259,11 @@
     width: 300px;
     margin-top: 30px;
     padding: 10px;
-    color: #2d2d2d;
+    color: white;
     background-color: $color-blue;
+
+    &:hover {
+      background-color: darken($color-blue, 4%);
+    }
   }
 </style>
