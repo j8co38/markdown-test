@@ -2,7 +2,7 @@
   <div class="editor">
     <h1>エディター画面</h1>
     <span>{{ user.displayName }}</span>
-    <button class="logoutBtn" @click="logout">ログアウト</button>
+    <button class="logoutBtn" @click="logout"><i class="fas fa-sign-out-alt"></i>ログアウト</button>
     <div class="memoSection">
       <div class="memoListWrapper">
         <button class="addMemoBtn" @click="addMemo">メモの追加</button>
@@ -106,9 +106,13 @@
   .logoutBtn {
     font-size: 12px;
     margin-left: 8px;
-    padding: 4px 8px;
+    padding: 4px 10px;
     color: white;
     background-color: rgba(0, 10, 10, 0.4);
+
+    .fas {
+      margin-right: 4px;
+    }
   }
 
   .editor {
