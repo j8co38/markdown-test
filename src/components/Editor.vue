@@ -259,7 +259,7 @@
     width: 300px;
     margin-top: 30px;
     padding: 10px;
-    color: #2d2d2d;
+    color: white;
     background-color: $color-blue;
 
     &:hover {

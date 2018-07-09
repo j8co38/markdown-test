@@ -1,5 +1,6 @@
 <template>
   <div id="home">
+    <img class="mv" src="../assets/md.svg">
     <h1>{{ msg }}</h1>
     <button @click="googleLogin">Google アカウントでログイン</button>
   </div>
@@ -10,7 +11,7 @@
     name: 'home',
     data () {
       return {
-        msg: 'Welcome to MyMarkdown'
+        msg: 'Simple Markdown'
       }
     },
     methods: {
@@ -28,7 +29,18 @@
   button {
     font-size: 16px;
     font-weight: 600;
+    margin-top: 40px;
     padding: 10px 20px;
+    transition: all .2s;
+    color: white;
     background-color: $color-blue;
+
+    &:hover {
+      background-color: darken($color-blue, 4%);
+    }
+  }
+
+  .mv {
+    width: 16vw;
   }
 </style>
